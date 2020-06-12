@@ -30,6 +30,6 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt5 COMPONENTS Core Widgets Network REQUIRED)
 find_package(OpenSSL)
 
-add_executable(LauncherApp MACOSX_BUNDLE main.cpp MainWindow.cpp MainWindow.h Engine.cpp Engine.h) #HttpRequest.cpp HttpRequest.h)
+add_executable(LauncherApp MACOSX_BUNDLE main.cpp MainWindow.cpp MainWindow.h Engine.cpp Engine.h CertificateGenerator.cpp CertificateGenerator.h) #HttpRequest.cpp HttpRequest.h)
 
 target_link_libraries(LauncherApp Qt5::Core Qt5::Widgets Qt5::Network OpenSSL::SSL OpenSSL::Crypto)

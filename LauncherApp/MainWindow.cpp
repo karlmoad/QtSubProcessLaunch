@@ -15,14 +15,17 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     this->btnInit = new QPushButton("Start");
     this->btnQuery = new QPushButton("Query");
     this->btnStop = new QPushButton("Stop");
+    this->btnCert = new QPushButton("Generate a Certificate");
     layout->addWidget(btnInit);
     layout->addWidget(btnQuery);
     layout->addWidget(btnStop);
+    layout->addWidget(btnCert);
 
     connect(this->btnInit, &QPushButton::clicked, this, &MainWindow::startHandler);
     connect(this->btnStop, &QPushButton::clicked, this, &MainWindow::stopHandler);
     connect(this->btnQuery, &QPushButton::clicked, this, &MainWindow::queryHandler);
     connect(this->engine, &Engine::responseAvailable, this, &MainWindow::responseHandler);
+    connect(this->btnCert, &QPushButton::clicked, this, &MainWindow::certRequestHandler);
 
     this->setCentralWidget(widget);
 }
@@ -62,4 +65,11 @@ void MainWindow::queryHandler()
 void MainWindow::responseHandler(QByteArray const &response)
 {
     qDebug() << response;
+}
+
+void MainWindow::certRequestHandler()
+{
+    CertificateGenerator generator;
+    generator.GenerateSelfSignedCertificate();
+    generator.WriteToFile("/Users/karl/documents/certs");
 }

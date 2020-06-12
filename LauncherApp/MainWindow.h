@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QtWidgets>
 #include "Engine.h"
+#include "CertificateGenerator.h"
 
 class MainWindow: public QMainWindow
 {
@@ -25,6 +26,7 @@ private slots:
     void startHandler();
     void stopHandler();
     void queryHandler();
+    void certRequestHandler();
     void responseHandler(QByteArray const &response);
 
 private:
@@ -32,6 +34,7 @@ private:
     QPushButton *btnInit;
     QPushButton *btnQuery;
     QPushButton *btnStop;
+    QPushButton *btnCert;
 };
 
 
