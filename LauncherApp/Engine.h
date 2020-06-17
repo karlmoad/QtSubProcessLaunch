@@ -10,6 +10,17 @@
 #include <QProcess>
 #include <QDebug>
 #include <QtNetwork>
+#include <openssl/engine.h>
+#include <openssl/conf.h>
+#include <openssl/evp.h>
+#include <openssl/err.h>
+#include <openssl/aes.h>
+#include <openssl/rand.h>
+
+#define KEYSIZE 64
+#define IVSIZE 64
+#define BLOCKSIZE 256
+#define SALTSIZE 32
 
 class Engine: public QObject
 {
@@ -38,7 +49,11 @@ private:
     QProcess *_process;
     QNetworkAccessManager *_net;
     QString _AccessKey = "98765432101234567890";
-    QString _path = "/Users/karl/Documents/code/exp/SinpleProcLaunch/Service/build/EchoService";
+
+    static QByteArray encryptAES(QByteArray passphrase, QByteArray &data);
+    static QByteArray decryptAES(QByteArray passphrase, QByteArray &data);
+    static QByteArray randomBytes(int size);
+
 };
 
 

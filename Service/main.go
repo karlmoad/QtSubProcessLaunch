@@ -34,7 +34,6 @@ func main() {
      stop = make(chan int, 1)
      wait := &sync.WaitGroup{}
      
-     
      router := mux.NewRouter()
      router.HandleFunc("/",HealthCheckHandler).Methods("GET")
      router.HandleFunc("/query", AccessVerificationHandler(EchoResponseHandler)).Methods("POST")
@@ -52,7 +51,7 @@ func main() {
      
      go func() {
           defer wait.Done()
-          if err := server.ListenAndServe() ; err != nil {
+          if err := server.ListenAndServeTLS("./cert.pem","./key.pem") ; err != nil {
                log.Printf("Listen and Serve: %s", err.Error())
           }
      }()
