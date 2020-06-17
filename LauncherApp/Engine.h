@@ -17,10 +17,9 @@
 #include <openssl/aes.h>
 #include <openssl/rand.h>
 
-#define KEYSIZE 64
-#define IVSIZE 64
-#define BLOCKSIZE 256
-#define SALTSIZE 32
+#define KEYSIZE 32
+#define IVSIZE 32
+#define SALTSIZE 8
 
 class Engine: public QObject
 {

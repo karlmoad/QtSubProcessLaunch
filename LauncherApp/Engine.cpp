@@ -86,9 +86,14 @@ void Engine::ExecuteQuery(const QJsonObject &json)
     //req.setRawHeader(QString("Authorization").toUtf8(),_AccessKey.toUtf8());
     //_net->post(req,QJsonDocument(json).toJson());
 
+    QByteArray data = QJsonDocument(json).toJson();
+    QByteArray encrypted = Engine::encryptAES(_AccessKey.toUtf8(),data);
+    QByteArray decrypted = Engine::decryptAES(_AccessKey.toUtf8(),encrypted);
 
-
-
+    qDebug() << "Key: " << _AccessKey;
+    qDebug() << "Orig: " << data;
+    qDebug() << encrypted.toBase64();
+    qDebug() << decrypted;
 
 }
 
@@ -182,7 +187,7 @@ QByteArray Engine::decryptAES(QByteArray passphrase, QByteArray &data)
     const unsigned char* salt = (const unsigned char*)msalt.constData();
     const unsigned char* password = (const unsigned char*)passphrase.data();
 
-    int i = EVP_BytesToKey(EVP_aes_256_cbc(), EVP_sha1(), salt,password, passphrase.length(),rounds,key,iv);
+    int i = EVP_BytesToKey(EVP_aes_256_cbc(), EVP_sha256(), salt,password, passphrase.length(),rounds,key,iv);
 
     if(i != KEYSIZE)
     {
